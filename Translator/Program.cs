@@ -4,8 +4,48 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 
+
+
 namespace Translator
 {
+    
+    class Word
+    {
+        const string RUSWord = "йцукенгшщзхъфывапролджэячсмитьёбюъЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁ";
+        const string ENGWord = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+        public string TextWord { get; set; }
+
+        public Word(string textword)
+        {
+            this.TextWord = textword;
+        }
+        
+        public string DefinitionWord(string textword)
+        {
+            int RuCount = 0;
+            int EngCount = 0;
+
+            for (int i = 0; i < textword.Length; i++)
+            {
+                for (int j = 0; j < RUSWord.Length; j++) if (textword[i] == RUSWord[j]) RuCount++;
+                for (int j = 0; j < ENGWord.Length; j++) if (ENGWord[j] == textword[i]) EngCount++;
+            }
+            if (RuCount == textword.Length) return "Rus";
+            if (EngCount == textword.Length) return "Eng";
+            return null;
+        }
+    }
+    class EngWord : Word
+    {
+        public string engword { get; set; }
+
+        public EngWord(string textword=null, string engword=null) : base(textword)
+        {
+            this.engword = engword;
+        }
+
+
+    }
     class EngRus
     {
         public string Word { get; set; } // Английское слово
@@ -310,7 +350,11 @@ File.WriteAllText("EngRus.json", json);
 
         static void Main(string[] args)
         {
-           
+            EngWord name = new EngWord();
+            Console.WriteLine(name.TextWord);
+            Console.WriteLine(name.DefinitionWord("имя"));
+                       
+            
             while (true)
             {
                 menu();
