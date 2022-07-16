@@ -197,7 +197,7 @@ namespace Translator
 
                 }
 
-            }
+
 
             if (RusOrEng(AddWord) == "Eng")
             {
